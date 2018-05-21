@@ -1,3 +1,4 @@
+source 'https://xJJeo6DKrLdxh5jdysLs@repo.fury.io/h_app97224903/'
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
