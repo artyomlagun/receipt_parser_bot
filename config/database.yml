@@ -1,0 +1,14 @@
+development: &default
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  database: receipt_parser
+  pool: 5
+
+test:
+  <<: *default
+  database: receipt_parser
+
+production:
+  encoding: unicode
+  pool: 5
