@@ -1,6 +1,7 @@
 # Faraday.get("https://api.telegram.org/bot517795478:AAG26NTNYlD0LeMtzFhgCZ4dG61gOKtqZic/setWebhook?url=https://98614396.ngrok.io/bot517795478") - activate webhooks for ngrok
 require 'open-uri'
 require 'faraday'
+require 'zbar'
 class TelegramRequestsController < ApplicationController
   skip_before_action  :verify_authenticity_token
 
