@@ -1,5 +1,5 @@
 GIT
-  remote: git@bitbucket.org:artyomlagun/receipt_parser.git
+  remote: https://artyomlagun@bitbucket.org/artyomlagun/receipt_parser.git
   revision: 9dcdbcf64171807654e7a63b89b38eb5ec0a546d
   specs:
     receipt_parser (0.1.0)

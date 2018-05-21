@@ -40,7 +40,7 @@ gem 'faraday'
 gem 'zbar'
 
 # gem 'receipt_parser', git: "git@bitbucket.org:itexus/receipt_parser.git"
-gem 'receipt_parser', git: "git@bitbucket.org:artyomlagun/receipt_parser.git"
+gem 'receipt_parser', git: "https://artyomlagun@bitbucket.org/artyomlagun/receipt_parser.git"
 # gem 'receipt_parser', path: '../receipt_parser'
 
 group :development, :test do
