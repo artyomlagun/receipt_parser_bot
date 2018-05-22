@@ -63,7 +63,7 @@ class CheckReceiptJob < ApplicationJob
     response_text
   end
 
-  def send_receipt_info(chat_id, receipt_info)
+  def send_receipt_info(chat_id, response_text)
     connection = Faraday.new(BASIC_URL_TELEGRAM, {request: {timeout: 20}})
     response = connection.post do |req|
       req.url("/sendMessage")
