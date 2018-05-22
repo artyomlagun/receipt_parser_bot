@@ -13,7 +13,7 @@ class CheckReceiptJob < ApplicationJob
   def perform(chat_id, image_id)
     image_info = read_image(image_id)
 
-    if image_info.empty?
+    if image_info.nil?
       send_receipt_info(chat_id, 'Чек некорректен! Попробуйте ещё раз или другой чек.')
     else
       receipt_info = get_receipt_info(image_info)
