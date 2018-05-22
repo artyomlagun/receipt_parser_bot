@@ -35,7 +35,7 @@ class CheckReceiptJob < ApplicationJob
     downloaded_file = uri.open
     IO.copy_stream(downloaded_file, tempfile.path)
     image_info = ZBar::Image.from_jpeg(File.binread(tempfile)).process[0]
-    unless image_info.empty?
+    unless image_info.nil?
       image_info = image_info.data
     end
     image_info
