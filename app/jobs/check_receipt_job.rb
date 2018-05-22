@@ -11,14 +11,20 @@ class CheckReceiptJob < ApplicationJob
   GET_FILE_URL = "https://api.telegram.org/file/bot517795478:AAG26NTNYlD0LeMtzFhgCZ4dG61gOKtqZic"
   REGEXP = /t=[0-9T]+&s=[0-9]{0,9}.[0-9]{2}&fn=[0-9]{14,20}&i=[0-9]+&fp=[0-9]{8,16}&n=[0-9]+/i
 
+  SOMETHING_WENT_WRONG_MSG = 'Что-то пошло не так. Повторите попытку.'
+  INVALID_RECEIPT_MSG = 'Чек некорректен! Попробуйте ещё раз или другой чек.'
+
   def perform(chat_id, image_id)
     image_info = read_image(image_id)
 
-    if image_info.nil? || image_info !=~ REGEXP
-      send_receipt_info(chat_id, 'Чек некорректен! Попробуйте ещё раз или другой чек.')
+    if image_info.nil?
+      send_receipt_info(chat_id, INVALID_RECEIPT_MSG)
     else
-      receipt_info = get_receipt_info(image_info)
-
+      if image_info =~ REGEXP
+        receipt_info = get_receipt_info(image_info)
+      else
+        receipt_info = INVALID_RECEIPT_MSG
+      end
       send_receipt_info(chat_id, receipt_info)
     end
   end
@@ -57,13 +63,13 @@ class CheckReceiptJob < ApplicationJob
       information = JSON.parse(response.body)
 
       if information.nil?
-        response_text = 'Что-то пошло не так. Повторите попытку.'
+        response_text = SOMETHING_WENT_WRONG_MSG
       else
         response_text = "В вашем чеке: \n"
         information['items'].each {|item| response_text += "#{item['name']} - #{item['quantity']} - #{item['price']} \n" }
       end
     rescue Faraday::Error => err
-      response_text = 'Что-то пошло не так. Повторите попытку.'
+      response_text = SOMETHING_WENT_WRONG_MSG
     end
     response_text
   end
