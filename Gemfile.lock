@@ -1,5 +1,5 @@
 GIT
-  remote: https://itexus-dev@git.fury.io/h_app97224903/receipt_parser.git
+  remote: git@bitbucket.org:itexus/receipt_parser.git
   revision: 88f0f2a88a12ba04da5bfb850378b770e406f12f
   specs:
     receipt_parser (0.1.0)

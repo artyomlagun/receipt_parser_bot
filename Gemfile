@@ -40,7 +40,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'faraday'
 gem 'zbar', require: false
 
-gem 'receipt_parser', git: "https://itexus-dev@git.fury.io/h_app97224903/receipt_parser.git"
+gem 'receipt_parser', git: "git@bitbucket.org:itexus/receipt_parser.git"
 # gem 'receipt_parser', path: '../receipt_parser'
 
 group :development, :test do
