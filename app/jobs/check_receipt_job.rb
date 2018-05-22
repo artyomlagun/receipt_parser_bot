@@ -9,11 +9,12 @@ class CheckReceiptJob < ApplicationJob
   BASIC_URL_TELEGRAM = "https://api.telegram.org/bot517795478:AAG26NTNYlD0LeMtzFhgCZ4dG61gOKtqZic"
   GET_FILE_PATH_URL = "#{BASIC_URL_TELEGRAM}/getFile?file_id="
   GET_FILE_URL = "https://api.telegram.org/file/bot517795478:AAG26NTNYlD0LeMtzFhgCZ4dG61gOKtqZic"
+  REGEXP = /t=[0-9T]+&s=[0-9]{0,9}.[0-9]{2}&fn=[0-9]{14,20}&i=[0-9]+&fp=[0-9]{8,16}&n=[0-9]+/i
 
   def perform(chat_id, image_id)
     image_info = read_image(image_id)
 
-    if image_info.nil?
+    if image_info.nil? || image_info !=~ REGEXP
       send_receipt_info(chat_id, 'Чек некорректен! Попробуйте ещё раз или другой чек.')
     else
       receipt_info = get_receipt_info(image_info)
