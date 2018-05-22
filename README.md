@@ -1,24 +1,11 @@
-# README
+Чтобы бот работал с вашим сервером нужно включить WebHook для вашего URL. Для этого достаточно перейти в браузере по ссылке:
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+`
+https://api.telegram.org/bot<TOKEN>/setWebhook?url=https://example.com/botXXXXXXXXX
+`
 
-Things you may want to cover:
+TOKEN - состоит из двух частей: `XXXXXXXXX` и `YYYYYYYYYYYYYYYYYYYYYYYYYY` и имеет конечный вид:
 
-* Ruby version
+ `XXXXXXXXX:YYYYYYYYYYYYYYYYYYYYYYYYYY`
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+`https://example.com/botXXXXXXXXX` - следует заменить на ваш урл с `https`
