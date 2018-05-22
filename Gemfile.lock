@@ -1,6 +1,6 @@
 GIT
   remote: git@bitbucket.org:itexus/receipt_parser.git
-  revision: 9dcdbcf64171807654e7a63b89b38eb5ec0a546d
+  revision: 88f0f2a88a12ba04da5bfb850378b770e406f12f
   specs:
     receipt_parser (0.1.0)
       faraday
