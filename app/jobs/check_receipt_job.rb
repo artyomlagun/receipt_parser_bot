@@ -36,7 +36,7 @@ class CheckReceiptJob < ApplicationJob
 
   def get_receipt_info(params)
     parsed_params = params.split('&').map {|param| param.split('=')}.to_h
-    connection = Faraday.new(nil, {request: {timeout: 40}})
+    connection = Faraday.new('https://receipt-parser-bottington.herokuapp.com', {request: {timeout: 40}})
     response = connection.post do |req|
       req.url("/receipt_parser/parse.json")
       req.headers['Content-Type'] = 'application/json'
