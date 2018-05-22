@@ -43,22 +43,26 @@ class CheckReceiptJob < ApplicationJob
 
   def get_receipt_info(params)
     parsed_params = params.split('&').map {|param| param.split('=')}.to_h
-    connection = Faraday.new('https://receipt-parser-bottington.herokuapp.com', {request: {timeout: 40}})
-    response = connection.post do |req|
-      req.url("/receipt_parser/parse.json")
-      req.headers['Content-Type'] = 'application/json'
-      req.body = {
-        receipt_info: parsed_params
-      }.to_json
-    end
+    begin
+      connection = Faraday.new('https://receipt-parser-bottington.herokuapp.com', {request: {timeout: 40}})
+      response = connection.post do |req|
+        req.url("/receipt_parser/parse.json")
+        req.headers['Content-Type'] = 'application/json'
+        req.body = {
+          receipt_info: parsed_params
+        }.to_json
+      end
 
-    information = JSON.parse(response.body)
+      information = JSON.parse(response.body)
 
-    if information.nil?
+      if information.nil?
+        response_text = 'Что-то пошло не так. Повторите попытку.'
+      else
+        response_text = "В вашем чеке: \n"
+        information['items'].each {|item| response_text += "#{item['name']} - #{item['quantity']} - #{item['price']} \n" }
+      end
+    rescue Faraday::Error => err
       response_text = 'Что-то пошло не так. Повторите попытку.'
-    else
-      response_text = "В вашем чеке: \n"
-      information['items'].each {|item| response_text += "#{item['name']} - #{item['quantity']} - #{item['price']} \n" }
     end
     response_text
   end
