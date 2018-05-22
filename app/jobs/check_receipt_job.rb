@@ -58,7 +58,7 @@ class CheckReceiptJob < ApplicationJob
       response_text = 'Что-то пошло не так. Повторите попытку.'
     else
       response_text = "В вашем чеке: \n"
-      receipt_info['items'].each {|item| response_text += "#{item['name']} - #{item['quantity']} - #{item['price']} \n" }
+      information['items'].each {|item| response_text += "#{item['name']} - #{item['quantity']} - #{item['price']} \n" }
     end
     response_text
   end
