@@ -68,9 +68,9 @@ class CheckReceiptJob < ApplicationJob
   end
 
   def send_receipt_info(chat_id, response_text)
-    connection = Faraday.new(BASIC_URL_TELEGRAM, {request: {timeout: 20}})
+    connection = Faraday.new(nil, {request: {timeout: 20}})
     response = connection.post do |req|
-      req.url("/sendMessage")
+      req.url("#{BASIC_URL_TELEGRAM}/sendMessage")
       req.headers['Content-Type'] = 'application/json'
       req.body = {chat_id: chat_id, text: response_text}.to_json
     end
