@@ -13,9 +13,13 @@ class CheckReceiptJob < ApplicationJob
   def perform(chat_id, image_id)
     image_info = read_image(image_id)
 
-    receipt_info = get_receipt_info(image_info)
+    if image_info.empty?
+      send_receipt_info(chat_id, 'Чек некорректен! Попробуйте ещё раз или другой чек.')
+    else
+      receipt_info = get_receipt_info(image_info)
 
-    send_receipt_info(chat_id, receipt_info)
+      send_receipt_info(chat_id, receipt_info)
+    end
   end
 
   private
@@ -30,7 +34,10 @@ class CheckReceiptJob < ApplicationJob
     tempfile = Tempfile.new("open-uri", binmode: true)
     downloaded_file = uri.open
     IO.copy_stream(downloaded_file, tempfile.path)
-    image_info = ZBar::Image.from_jpeg(File.binread(tempfile)).process[0].data
+    image_info = ZBar::Image.from_jpeg(File.binread(tempfile)).process[0]
+    unless image_info.empty?
+      image_info = image_info.data
+    end
     image_info
   end
 
