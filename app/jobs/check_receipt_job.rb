@@ -52,16 +52,21 @@ class CheckReceiptJob < ApplicationJob
       }.to_json
     end
 
-    JSON.parse(response.body)
+    information = JSON.parse(response.body)
+
+    if information.nil?
+      response_text = 'Что-то пошло не так. Повторите попытку.'
+    else
+      response_text = "В вашем чеке: \n"
+      receipt_info['items'].each {|item| response_text += "#{item['name']} - #{item['quantity']} - #{item['price']} \n" }
+    end
+    response_text
   end
 
   def send_receipt_info(chat_id, receipt_info)
-    response_text = "В вашем чеке: \n"
-    receipt_info['items'].each {|item| response_text += "#{item['name']} - #{item['quantity']} - #{item['price']} \n" }
-
-    connection = Faraday.new(nil, {request: {timeout: 20}})
+    connection = Faraday.new(BASIC_URL_TELEGRAM, {request: {timeout: 20}})
     response = connection.post do |req|
-      req.url(URI("#{BASIC_URL_TELEGRAM}/sendMessage"))
+      req.url("/sendMessage")
       req.headers['Content-Type'] = 'application/json'
       req.body = {chat_id: chat_id, text: response_text}.to_json
     end
