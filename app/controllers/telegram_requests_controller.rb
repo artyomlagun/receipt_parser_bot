@@ -6,15 +6,6 @@ class TelegramRequestsController < ApplicationController
   BASIC_URL_TELEGRAM = "https://api.telegram.org/bot517795478:AAG26NTNYlD0LeMtzFhgCZ4dG61gOKtqZic"
 
   def send_request
-    # Dir.mkdir("#{Rails.root}/public/temporary/") unless File.exists?("#{Rails.root}/public/temporary/")
-    # File.open("#{Rails.root}/public/temporary/request.txt", 'w+') do |file|
-    #   file << "URL: #{request.url}\n"
-    #   request.headers.each {|h| file << "HEADERS: #{h}\n"}
-    #   file << "BODY: "
-    #   file << request.body
-    #   file.close
-    # end
-    request.headers.each {|h| p "HEADERS: #{h}\n"}
     chat_id = params[:message][:chat][:id]
     user_first_name = params[:message][:from][:first_name]
     message_text = params[:message][:text]
